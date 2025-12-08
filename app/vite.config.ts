@@ -49,18 +49,4 @@ export default defineConfig({
       },
     },
   },
-  // 規約 7.2 & 7.3 Vitest設定
-  test: {
-    globals: true,
-    environment: 'jsdom', // DOM操作が必要なWidgetテスト用
-    setupFiles: './test/setup.ts', // (任意) jest-dom等のセットアップ
-    include: [
-      'src/**/*.{test,spec}.{js,ts,jsx,tsx}',
-      'test/**/*.{test,spec}.{js,ts,jsx,tsx}',
-    ],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-    },
-  },
 });
