@@ -4,7 +4,7 @@
     "target": "ES2023",
     "lib": ["ES2023"],
     "module": "ESNext",
-    "types": ["node"],
+    "types": ["node"], // Node.jsの型定義
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -14,7 +14,7 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Linting */
+    /* Strict Rules */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
