@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    /* ベース設定 */
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vite-plugin-svgr/client"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -16,13 +17,24 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
+    /* Strict Rules (厳格モード) */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "noImplicitReturns": true, // 追加: 元のtsconfig.jsonから移動
+
+    /* Safety Rules (高度な安全性) - 元のtsconfig.jsonから移動 */
+    "noUncheckedIndexedAccess": true, // 配列アクセスの安全化
+    "exactOptionalPropertyTypes": true, // オプショナルプロパティの厳格化
+
+    /* Path Aliases (規約準拠) */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }

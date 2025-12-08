@@ -1,7 +1,5 @@
-FROM node:lts-alpine
+FROM mcr.microsoft.com/playwright:v1.57.0-noble
 WORKDIR /app
-# bash を入れる（必要ならシェル操作用）
-RUN apk add --no-cache bash
 # package.json / package-lock.json を先にコピーして依存をインストール（キャッシュを効かせるため）
 COPY ./app/package*.json ./
 # package-lock.json があれば npm ci を使い、なければ npm install

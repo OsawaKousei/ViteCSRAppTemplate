@@ -1,10 +1,17 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { App } from '@/app/App'; // 修正: src/app/App を参照
 import './index.css';
-import App from './App';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+// BasicGuidelineに従い、nullチェックを行う
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 );
