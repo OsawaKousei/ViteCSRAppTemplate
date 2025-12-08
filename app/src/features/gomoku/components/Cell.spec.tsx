@@ -5,7 +5,13 @@ import { PLAYER } from '../types';
 test('should render empty cell', async ({ mount }) => {
   const component = await mount(
     <div style={{ width: '40px', height: '40px' }}>
-      <Cell x={0} y={0} value={null} isLastMove={false} onClick={() => {}} />
+      <Cell
+        x={0}
+        y={0}
+        value={null}
+        isLastMove={false}
+        onClick={() => undefined}
+      />
     </div>,
   );
   await expect(component.locator('div[role="button"]')).toBeVisible();
@@ -21,7 +27,7 @@ test('should render black stone', async ({ mount }) => {
         y={0}
         value={PLAYER.BLACK}
         isLastMove={false}
-        onClick={() => {}}
+        onClick={() => undefined}
       />
     </div>,
   );
@@ -36,7 +42,7 @@ test('should render white stone', async ({ mount }) => {
         y={0}
         value={PLAYER.WHITE}
         isLastMove={false}
-        onClick={() => {}}
+        onClick={() => undefined}
       />
     </div>,
   );
@@ -51,7 +57,7 @@ test('should highlight last move', async ({ mount }) => {
         y={0}
         value={PLAYER.BLACK}
         isLastMove={true}
-        onClick={() => {}}
+        onClick={() => undefined}
       />
     </div>,
   );

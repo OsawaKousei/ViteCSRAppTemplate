@@ -8,7 +8,11 @@ const emptyBoard = Array(15).fill(Array(15).fill(null));
 test('should render 15x15 board', async ({ mount }) => {
   const component = await mount(
     <div style={{ width: '600px', height: '600px' }}>
-      <GomokuBoard board={emptyBoard} lastMove={null} onCellClick={() => {}} />
+      <GomokuBoard
+        board={emptyBoard}
+        lastMove={null}
+        onCellClick={() => undefined}
+      />
     </div>,
   );
   await expect(component.locator('div[role="button"]')).toHaveCount(225);
