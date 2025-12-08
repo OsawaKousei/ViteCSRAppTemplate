@@ -1,4 +1,4 @@
-FROM node:25-bookworm
+FROM mcr.microsoft.com/playwright:v1.57.0-noble
 WORKDIR /app
 # package.json / package-lock.json を先にコピーして依存をインストール（キャッシュを効かせるため）
 COPY ./app/package*.json ./
