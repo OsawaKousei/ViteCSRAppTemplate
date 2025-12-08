@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 import { GomokuBoard } from './GomokuBoard';
-import { PLAYER } from '../types';
 
 // 15x15 empty board
 const emptyBoard = Array(15).fill(Array(15).fill(null));
