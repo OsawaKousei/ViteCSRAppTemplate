@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useGomokuStore } from './useGomokuStore';
 import { PLAYER, CELL_STATE } from '../types';
 
@@ -33,6 +33,9 @@ describe('useGomokuStore', () => {
   });
 
   it('should not place stone on occupied cell', () => {
+    const consoleSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
     useGomokuStore.getState().placeStone(7, 7);
     useGomokuStore.getState().placeStone(7, 7); // Try placing again
 
@@ -40,6 +43,8 @@ describe('useGomokuStore', () => {
     expect(state.board[7]?.[7]).toBe(PLAYER.BLACK); // Still Black
     expect(state.currentPlayer).toBe(PLAYER.WHITE); // Still White's turn
     expect(state.history).toHaveLength(1);
+    expect(consoleSpy).toHaveBeenCalled();
+    consoleSpy.mockRestore();
   });
 
   it('should detect win', () => {
