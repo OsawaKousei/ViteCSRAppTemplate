@@ -1,9 +1,12 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr'; // 規約 6.2 SVG対応
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -36,9 +39,12 @@ export default defineConfig({
           }
           if (id.includes('src/features/')) {
             // src/features/xxx/... -> feature-xxx
-            const featureName = id.split('src/features/')[1].split('/')[0];
-            return `feature-${featureName}`;
+            const featureName = id.split('src/features/')[1]?.split('/')[0];
+            if (featureName) {
+              return `feature-${featureName}`;
+            }
           }
+          return undefined;
         },
       },
     },
@@ -47,8 +53,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom', // DOM操作が必要なWidgetテスト用
-    setupFiles: './src/test/setup.ts', // (任意) jest-dom等のセットアップ
-    include: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    setupFiles: './test/setup.ts', // (任意) jest-dom等のセットアップ
+    include: [
+      'src/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'test/**/*.{test,spec}.{js,ts,jsx,tsx}',
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
