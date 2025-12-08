@@ -13,7 +13,7 @@ type GomokuState = {
   board: BoardState;
   currentPlayer: Player;
   winner: Player | null;
-  history: MoveRecord[];
+  history: readonly MoveRecord[];
   historyIndex: number; // 現在表示している履歴のインデックス (0-based, -1 means initial state)
 };
 
@@ -26,7 +26,7 @@ type GomokuActions = {
 
 // Helper for undo/rebuild
 const rebuildBoard = (
-  history: MoveRecord[],
+  history: readonly MoveRecord[],
   targetIndex: number,
 ): BoardState => {
   return history.slice(0, targetIndex + 1).reduce((board, move) => {

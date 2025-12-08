@@ -38,7 +38,7 @@ describe('HistoryWidget', () => {
   });
 
   it('履歴がある場合、手の一覧を表示する', () => {
-    const history: readonly MoveRecord[] = [
+    const history: MoveRecord[] = [
       { turn: 1, player: PLAYER.BLACK, coordinate: { x: 7, y: 7 } },
       { turn: 2, player: PLAYER.WHITE, coordinate: { x: 8, y: 8 } },
       { turn: 3, player: PLAYER.BLACK, coordinate: { x: 9, y: 9 } },
@@ -97,7 +97,7 @@ describe('HistoryWidget', () => {
   });
 
   it('履歴の最後にいる場合、Undoは有効、Redoは無効', () => {
-    const history: readonly MoveRecord[] = [
+    const history: MoveRecord[] = [
       { turn: 1, player: PLAYER.BLACK, coordinate: { x: 7, y: 7 } },
       { turn: 2, player: PLAYER.WHITE, coordinate: { x: 8, y: 8 } },
     ];
@@ -126,7 +126,7 @@ describe('HistoryWidget', () => {
   });
 
   it('履歴の途中にいる場合、Undo/Redo両方が有効', () => {
-    const history: readonly MoveRecord[] = [
+    const history: MoveRecord[] = [
       { turn: 1, player: PLAYER.BLACK, coordinate: { x: 7, y: 7 } },
       { turn: 2, player: PLAYER.WHITE, coordinate: { x: 8, y: 8 } },
       { turn: 3, player: PLAYER.BLACK, coordinate: { x: 9, y: 9 } },
@@ -157,7 +157,7 @@ describe('HistoryWidget', () => {
 
   it('Undoボタンをクリックするとundoアクションが発火する', async () => {
     const user = userEvent.setup();
-    const history: readonly MoveRecord[] = [
+    const history: MoveRecord[] = [
       { turn: 1, player: PLAYER.BLACK, coordinate: { x: 7, y: 7 } },
     ];
 
@@ -185,7 +185,7 @@ describe('HistoryWidget', () => {
 
   it('Redoボタンをクリックするとredoアクションが発火する', async () => {
     const user = userEvent.setup();
-    const history: readonly MoveRecord[] = [
+    const history: MoveRecord[] = [
       { turn: 1, player: PLAYER.BLACK, coordinate: { x: 7, y: 7 } },
       { turn: 2, player: PLAYER.WHITE, coordinate: { x: 8, y: 8 } },
     ];
