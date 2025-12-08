@@ -54,7 +54,7 @@
   - [x] `win-logic.ts` の網羅的テスト（境界値、各種勝利パターン）。
   - [x] `useGomokuStore.ts` の状態遷移テスト。
   - [x] `board-utils.ts` のテスト。
-- [ ] **Integration Tests**
+- [x] **Integration Tests**
   - Widget のレンダリングとイベントハンドリングのテスト。
 
 ## 3. 注意事項
