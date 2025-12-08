@@ -37,14 +37,14 @@
 
 各 Widget を Store および L1 コンポーネントと接続する。
 
-- [ ] **`GameControlWidget.tsx`**
+- [x] **`GameControlWidget.tsx`**
   - Store から `currentPlayer` を取得し表示。
   - 「New Game」ボタンで `initializeGame` を発火。
-- [ ] **`BoardWidget.tsx`**
+- [x] **`BoardWidget.tsx`**
   - Store から `board` を取得し `GomokuBoard` を描画。
   - クリックイベントで `placeStone` を発火。
   - `winner` が存在する場合、`GameResultModal` を表示。
-- [ ] **`HistoryWidget.tsx`**
+- [x] **`HistoryWidget.tsx`**
   - Store から `history` を取得しリスト表示。
   - Undo/Redo ボタンの実装。
 
