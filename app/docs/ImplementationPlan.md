@@ -15,21 +15,21 @@
 
 ### Phase 1: UI Components (L1) 実装
 
-- [ ] **Shared Components (`src/components/ui/`)**
+- [x] **Shared Components (`src/components/ui/`)**
   - shadcn/ui のコンポーネント（Button, Card, Dialog 等）が不足している場合、追加実装または調整を行う。
 - **Feature Components (`src/features/gomoku/components/`)**
-  - [ ] `Cell.tsx`: 盤面のマス目。`cva` を用いて状態（黒、白、空、直前の手）をスタイリングする。
-  - [ ] `GomokuBoard.tsx`: 15x15 のグリッドレイアウト。
-  - [ ] `PlayerBadge.tsx`: 手番表示用バッジ。
-  - [ ] `GameResultModal.tsx`: 勝敗決定時のダイアログ。
+  - [x] `Cell.tsx`: 盤面のマス目。`cva` を用いて状態（黒、白、空、直前の手）をスタイリングする。
+  - [x] `GomokuBoard.tsx`: 15x15 のグリッドレイアウト。
+  - [x] `PlayerBadge.tsx`: 手番表示用バッジ。
+  - [x] `GameResultModal.tsx`: 勝敗決定時のダイアログ。
 
 ### Phase 2: Domain Logic & State Management 実装
 
 - **Utils (`src/features/gomoku/utils/`)**
-  - [ ] `win-logic.ts`: 勝敗判定ロジック。最後の石を起点とした 4 方向探索。
-  - [ ] `board-utils.ts`: 盤面生成、バリデーション等の純粋関数。
+  - [x] `win-logic.ts`: 勝敗判定ロジック。最後の石を起点とした 4 方向探索。
+  - [x] `board-utils.ts`: 盤面生成、バリデーション等の純粋関数。
 - **Store (`src/features/gomoku/stores/`)**
-  - [ ] `useGomokuStore.ts`: Zustand ストアの実装。
+  - [x] `useGomokuStore.ts`: Zustand ストアの実装。
     - State: `board`, `currentPlayer`, `winner`, `history`, `historyIndex`
     - Actions: `initializeGame`, `placeStone`, `undo`, `redo`
 
