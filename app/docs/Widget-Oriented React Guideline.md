@@ -8,17 +8,17 @@
 
 ### **1.1 解決する課題**
 
-* **Performance:** 頻繁な状態更新による再レンダリングの巻き添え（ラグ）を防ぎます。
+- **Performance:** 頻繁な状態更新による再レンダリングの巻き添え（ラグ）を防ぎます。
 
-* **Scalability:** 機能追加による「Pageコンポーネントの肥大化」と「Propsバケツリレー（Prop Drilling）地獄」を防ぎます。
+- **Scalability:** 機能追加による「Pageコンポーネントの肥大化」と「Propsバケツリレー（Prop Drilling）地獄」を防ぎます。
 
-* **Maintainability:** UI（見た目）と Logic（振る舞い）の境界を物理的に強制し、変更の影響範囲を局所化します。
+- **Maintainability:** UI（見た目）と Logic（振る舞い）の境界を物理的に強制し、変更の影響範囲を局所化します。
 
 ### **1.2 適用範囲**
 
-* **対象:** 高度なインタラクションを持つアプリケーション（IDE, SaaS Product）。
+- **対象:** 高度なインタラクションを持つアプリケーション（IDE, SaaS Product）。
 
-* **対象外:** LP、ブログ、静的コーポレートサイト。
+- **対象外:** LP、ブログ、静的コーポレートサイト。
 
 ## ---
 
@@ -26,11 +26,11 @@
 
 本規約の核となる\*\*「3層構造（Widget-Oriented）」\*\*を採用します。各コンポーネントは以下のいずれかのレイヤーに明確に分類されなければなりません。
 
-| Layer | 名称 | 定義・役割 | 許可される依存 | 状態管理の責務 |
-| :---- | :---- | :---- | :---- | :---- |
-| **L3** | **Layouts** |  **配置 (Placement)** Widgetを画面上のどこに置くかを定義するグリッド・枠組。  | Widget, Pure View |  **なし**  |
-| **L2** | **Widgets** |  **統合 (Integration)** 特定の機能ドメインを完結させる結合層。Storeと接続しActionを発行する。  | Store, API, Pure View |  **Global Store, Server State** (Zustand, TanStack Query)  |
-| **L1** | **Pure Views** |  **描画 (Rendering)** PropsをJSXに変換する純粋関数。DOMとStyleを持つ唯一の場所。  | **Props のみ** (外部依存禁止) |  **UI State** (useState) ※開閉などの一時状態のみ  |
+| Layer  | 名称           | 定義・役割                                                                                   | 許可される依存                | 状態管理の責務                                           |
+| :----- | :------------- | :------------------------------------------------------------------------------------------- | :---------------------------- | :------------------------------------------------------- |
+| **L3** | **Layouts**    | **配置 (Placement)** Widgetを画面上のどこに置くかを定義するグリッド・枠組。                  | Widget, Pure View             | **なし**                                                 |
+| **L2** | **Widgets**    | **統合 (Integration)** 特定の機能ドメインを完結させる結合層。Storeと接続しActionを発行する。 | Store, API, Pure View         | **Global Store, Server State** (Zustand, TanStack Query) |
+| **L1** | **Pure Views** | **描画 (Rendering)** PropsをJSXに変換する純粋関数。DOMとStyleを持つ唯一の場所。              | **Props のみ** (外部依存禁止) | **UI State** (useState) ※開閉などの一時状態のみ          |
 
 ## ---
 
@@ -43,19 +43,19 @@ Feature-Sliced Design (FSD) の思想を取り入れ、機能単位の構造を�
 Plaintext
 
 src/  
-  features/  
-    file-explorer/        \# Feature Domain \[cite: 23\]  
-      components/         \# L1: Pure Views (非公開) \[cite: 23\]  
-      widgets/            \# L2: Widgets (公開API) \[cite: 23\]  
-      stores/             \# State & Logic \[cite: 23\]  
-      api/                \# Data Fetching \[cite: 23\]  
-      index.ts            \# Public Interface (Barrel) \[cite: 23\]
+ features/  
+ file-explorer/ \# Feature Domain \[cite: 23\]  
+ components/ \# L1: Pure Views (非公開) \[cite: 23\]  
+ widgets/ \# L2: Widgets (公開API) \[cite: 23\]  
+ stores/ \# State & Logic \[cite: 23\]  
+ api/ \# Data Fetching \[cite: 23\]  
+ index.ts \# Public Interface (Barrel) \[cite: 23\]
 
 ### **3.2 Public API Rule (カプセル化)**
 
-* 他の Feature から import して良いのは widgets/ と stores/ (Action用) のみとします。
+- 他の Feature から import して良いのは widgets/ と stores/ (Action用) のみとします。
 
-* components/ (Pure Views) は Feature 外からの参照を禁止します。
+- components/ (Pure Views) は Feature 外からの参照を禁止します。
 
 ## ---
 
@@ -67,19 +67,19 @@ src/
 
 DOMとStyleを持つことができる唯一のレイヤーです。
 
-* **Props設計:**  
-  * すべて readonly とします。  
-  * interface は禁止し、type を利用します。  
-  * コールバック命名は onEventName に統一します。
+- **Props設計:**
+  - すべて readonly とします。
+  - interface は禁止し、type を利用します。
+  - コールバック命名は onEventName に統一します。
 
-* **Logic禁止:**  
-  * useEffect は禁止します。  
-  * 条件分岐は ts-pattern またはガード節のみとし、switch は使用しません。  
-  * データの加工は行わず、受け取ったデータをそのまま表示します。  
-* **No Premature Optimization:**  
-  * **原則:** `React.memo` の使用は**原則禁止**とします。  
-  * **理由:** 現代のReactは十分に高速であり、不要なメモ化はコードの記述量を増やし、可読性を下げる（Simple is Best 違反）ため。また、誤ったメモ化（依存配列の不備や、毎回新しい参照のProps渡し）によるバグを防ぐため。  
-  * **例外:** 実際にUIのラグが観測され、React Profiler 等で「再レンダリングがボトルネックである」と特定された場合に限り、局所的な最適化として `React.memo` の導入を許可します。
+- **Logic禁止:**
+  - useEffect は禁止します。
+  - 条件分岐は ts-pattern またはガード節のみとし、switch は使用しません。
+  - データの加工は行わず、受け取ったデータをそのまま表示します。
+- **No Premature Optimization:**
+  - **原則:** `React.memo` の使用は**原則禁止**とします。
+  - **理由:** 現代のReactは十分に高速であり、不要なメモ化はコードの記述量を増やし、可読性を下げる（Simple is Best 違反）ため。また、誤ったメモ化（依存配列の不備や、毎回新しい参照のProps渡し）によるバグを防ぐため。
+  - **例外:** 実際にUIのラグが観測され、React Profiler 等で「再レンダリングがボトルネックである」と特定された場合に限り、局所的な最適化として `React.memo` の導入を許可します。
 
 TypeScript
 
@@ -87,36 +87,36 @@ TypeScript
 import { match } from 'ts-pattern';
 
 type Props \= {  
-  readonly status: 'loading' | 'success';  
-  readonly onRetry: () \=\> void;  
+ readonly status: 'loading' | 'success';  
+ readonly onRetry: () \=\> void;  
 };
 
 // memo でラップせず、直接関数コンポーネントとして定義  
 export const StatusBadge \= ({ status, onRetry }: Props) \=\> (  
-  \<div onClick\={onRetry}\>  
-    {match(status)  
-      .with('loading', () \=\> '⏳ Loading...')  
-      .with('success', () \=\> '✅ Success')  
-      .exhaustive()}  
-  \</div\>  
+ \<div onClick\={onRetry}\>  
+ {match(status)  
+ .with('loading', () \=\> '⏳ Loading...')  
+ .with('success', () \=\> '✅ Success')  
+ .exhaustive()}  
+ \</div\>  
 );
 
 ### **4.2 L2: Widgets (The Connectors)**
 
 StoreとPure Viewを接続する層です。
 
-* **役割限定:**  
-  * Storeからのデータ Select (useStore(selector))。
+- **役割限定:**
+  - Storeからのデータ Select (useStore(selector))。
 
-  * Pure View への Props 供給。
+  - Pure View への Props 供給。
 
-  * **スタイリング禁止:** レイアウト以外の装飾（色、フォント等）は記述しません。
+  - **スタイリング禁止:** レイアウト以外の装飾（色、フォント等）は記述しません。
 
-* **Render-as-you-fetch:** データ取得中は \<Suspense\> または Skeleton を表示する責務を持ちます。
+- **Render-as-you-fetch:** データ取得中は \<Suspense\> または Skeleton を表示する責務を持ちます。
 
 ### **4.3 L3: Layouts (The Skeleton)**
 
-* **Prop Drilling禁止:** Layout 経由で Widget にデータを渡すことを禁止します。Widget は自律的に Store からデータを取得してください。
+- **Prop Drilling禁止:** Layout 経由で Widget にデータを渡すことを禁止します。Widget は自律的に Store からデータを取得してください。
 
 ## ---
 
@@ -128,40 +128,40 @@ StoreとPure Viewを接続する層です。
 
 **Purpose:** APIレスポンスのキャッシュ、同期、再取得管理。
 
-* Rule 1: No useEffect Fetching  
-  コンポーネント内での useEffect \+ fetch は厳禁とします。必ずカスタムフック (useQuery, useMutation) を介してデータにアクセスすること。  
-* Rule 2: Isolation  
+- Rule 1: No useEffect Fetching  
+  コンポーネント内での useEffect \+ fetch は厳禁とします。必ずカスタムフック (useQuery, useMutation) を介してデータにアクセスすること。
+- Rule 2: Isolation  
   Query Keyの管理やFetcher関数は api/ ディレクトリ内のカスタムフックに隠蔽し、コンポーネントで直接 useQuery を定義しない。
 
 TypeScript
 
 // ✅ Good: api/useFileQuery.ts  
 export const useFileQuery \= (id: string) \=\> {  
-  return useQuery({  
-    queryKey: \['file', id\],  
-    queryFn: () \=\> fetchFile(id),  
-  });  
+ return useQuery({  
+ queryKey: \['file', id\],  
+ queryFn: () \=\> fetchFile(id),  
+ });  
 };
 
 ### **5.2 Client State: Zustand**
 
 **Purpose:** アプリケーション全体のUI状態（パネル開閉、選択中のアイテム）、およびWidget間の通信。
 
-* Rule 1: Store per Feature  
-  巨大な単一Storeを作らず、機能ドメインごとにStoreを分割する（例: useIDEStore, useTerminalStore）。  
-* Rule 2: Action Co-location  
-  状態を変更するロジック（Reducer相当）は、必ずStore内のActionとして定義する。コンポーネント側で setState のようなロジックを組んではならない。  
-* Rule 3: Selector Pattern  
+- Rule 1: Store per Feature  
+  巨大な単一Storeを作らず、機能ドメインごとにStoreを分割する（例: useIDEStore, useTerminalStore）。
+- Rule 2: Action Co-location  
+  状態を変更するロジック（Reducer相当）は、必ずStore内のActionとして定義する。コンポーネント側で setState のようなロジックを組んではならない。
+- Rule 3: Selector Pattern  
   再レンダリングを防ぐため、WidgetがStoreを購読する際は、必ずSelector関数を使用して必要な値だけを取り出すこと。
 
 TypeScript
 
 // ✅ Good: stores/useIDEStore.ts  
 interface IDEState {  
-  readonly activePanel: string | null;  
-  readonly actions: {  
-    readonly togglePanel: (panel: string) \=\> void;  
-  };  
+ readonly activePanel: string | null;  
+ readonly actions: {  
+ readonly togglePanel: (panel: string) \=\> void;  
+ };  
 }  
 // Consuming in Widget  
 const activePanel \= useIDEStore((s) \=\> s.activePanel); // Selector  
@@ -171,7 +171,7 @@ const { togglePanel } \= useIDEStore((s) \=\> s.actions);
 
 **Purpose:** コンポーネントを閉じれば消えて良い一時的な状態（アコーディオンの開閉、未送信のフォーム入力）。
 
-* **Rule:** ビジネスロジックに関わるデータや、他のWidgetと共有すべきデータを useState で管理してはなりません。
+- **Rule:** ビジネスロジックに関わるデータや、他のWidgetと共有すべきデータを useState で管理してはなりません。
 
 ## ---
 
@@ -225,9 +225,9 @@ Note: UIコンポーネントはマウントせず、純粋なTypeScriptのテ�
 
 **7\. 特記事項・例外運用 (Exceptions)**
 
-* **DOMアクセス:** フォーカス制御やスクロール同期など、IDE開発に必須なDOM操作に限り、L1レイヤーでの useRef \+ useEffect を許可します。
+- **DOMアクセス:** フォーカス制御やスクロール同期など、IDE開発に必須なDOM操作に限り、L1レイヤーでの useRef \+ useEffect を許可します。
 
-* **パフォーマンス:** useCallback, useMemo は「迷ったらやる」の方針を採用します。
+- **パフォーマンス:** useCallback, useMemo は「迷ったらやる」の方針を採用します。
 
 ## ---
 
@@ -235,12 +235,12 @@ Note: UIコンポーネントはマウントせず、純粋なTypeScriptのテ�
 
 本規約は以下の言語レベルの制約を継承しています。
 
-* **Immutable by Default:** let 禁止、readonly 配列の使用。  
-* **Functional Style:** Class 禁止、純粋関数の推奨。  
-* **Strict Syntax:**  
-  * enum 禁止 → Object-as-Enum パターン (as const)。  
-  * interface 禁止 → type 使用。  
-  * switch 禁止 → ts-pattern 使用。  
-  * Loops (for, while) 禁止 → 配列メソッド (map, reduce)。  
-* **Error Handling:** throw 禁止 → neverthrow (Result型) の使用。  
-* **Type Safety:** any の完全禁止、zod による実行時検証。
+- **Immutable by Default:** let 禁止、readonly 配列の使用。
+- **Functional Style:** Class 禁止、純粋関数の推奨。
+- **Strict Syntax:**
+  - enum 禁止 → Object-as-Enum パターン (as const)。
+  - interface 禁止 → type 使用。
+  - switch 禁止 → ts-pattern 使用。
+  - Loops (for, while) 禁止 → 配列メソッド (map, reduce)。
+- **Error Handling:** throw 禁止 → neverthrow (Result型) の使用。
+- **Type Safety:** any の完全禁止、zod による実行時検証。

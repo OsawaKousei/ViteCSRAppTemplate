@@ -114,8 +114,8 @@ export const useGomokuStore = create<GomokuState & GomokuActions>()(
         newIndex === -1
           ? PLAYER.BLACK
           : history[newIndex]?.player === PLAYER.BLACK
-          ? PLAYER.WHITE
-          : PLAYER.BLACK;
+            ? PLAYER.WHITE
+            : PLAYER.BLACK;
 
       set({
         board: newBoard,
