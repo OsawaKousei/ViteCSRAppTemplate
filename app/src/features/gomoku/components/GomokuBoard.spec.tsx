@@ -9,7 +9,7 @@ test('should render 15x15 board', async ({ mount }) => {
   const component = await mount(
     <div style={{ width: '600px', height: '600px' }}>
       <GomokuBoard board={emptyBoard} lastMove={null} onCellClick={() => {}} />
-    </div>
+    </div>,
   );
   await expect(component.locator('div[role="button"]')).toHaveCount(225);
 });
@@ -27,9 +27,9 @@ test('should handle cell click', async ({ mount }) => {
           clickedY = y;
         }}
       />
-    </div>
+    </div>,
   );
-  
+
   // Click cell at (0, 0)
   await component.locator('div[role="button"]').first().click();
   expect(clickedX).toBe(0);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -20,7 +21,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     ctPort: 3100,
     ctViteConfig: {
-      plugins: [tailwindcss()],
+      plugins: [tailwindcss() as any],
       resolve: {
         alias: {
           '@': resolve(__dirname, './src'),

@@ -4,7 +4,7 @@ import { PLAYER } from '../types';
 
 test('should render winner modal', async ({ mount, page }) => {
   await mount(
-    <GameResultModal winner={PLAYER.BLACK} open={true} onRestart={() => {}} />
+    <GameResultModal winner={PLAYER.BLACK} open={true} onRestart={() => {}} />,
   );
   // Dialog is rendered in a portal, so we look for it in the page
   await expect(page.getByText('Game Over')).toBeVisible();
@@ -20,7 +20,7 @@ test('should handle restart', async ({ mount, page }) => {
       onRestart={() => {
         restarted = true;
       }}
-    />
+    />,
   );
   await page.getByRole('button', { name: 'Play Again' }).click();
   expect(restarted).toBe(true);
