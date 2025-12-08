@@ -7,6 +7,12 @@ export default [
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   {
+    ignores: [
+      '**/components/ui/**', // shadcn/ui のコンポーネントディレクトリ
+      '**/lib/utils.ts', // shadcn/ui でよく使われる utils (cn関数等)
+      '**/.next/**', // Next.jsのビルド生成物
+      '**/dist/**', // 一般的なビルド生成物
+    ],
     rules: {
       /* ==========================================================
         基本的な禁止事項
