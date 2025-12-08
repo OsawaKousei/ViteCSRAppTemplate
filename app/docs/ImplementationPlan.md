@@ -50,9 +50,10 @@
 
 ### Phase 4: Testing
 
-- [ ] **Unit Tests (`vitest`)**
-  - `win-logic.ts` の網羅的テスト（境界値、各種勝利パターン）。
-  - `useGomokuStore.ts` の状態遷移テスト。
+- [x] **Unit Tests (`vitest`)**
+  - [x] `win-logic.ts` の網羅的テスト（境界値、各種勝利パターン）。
+  - [x] `useGomokuStore.ts` の状態遷移テスト。
+  - [x] `board-utils.ts` のテスト。
 - [ ] **Integration Tests**
   - Widget のレンダリングとイベントハンドリングのテスト。
 
