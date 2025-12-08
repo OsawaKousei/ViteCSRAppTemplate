@@ -1,0 +1,8 @@
+# Builder Stage
+FROM node:lts-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+# 型チェックとビルドを実行 (BasicGuideline遵守)
+RUN npm run build
