@@ -1,25 +1,6 @@
 ---
 description: 'agent for pure TypeScript Development'
-tools:
-  [
-    'runCommands',
-    'runTasks',
-    'edit',
-    'runNotebooks',
-    'search',
-    'new',
-    'extensions',
-    'usages',
-    'vscodeAPI',
-    'problems',
-    'changes',
-    'testFailure',
-    'openSimpleBrowser',
-    'fetch',
-    'githubRepo',
-    'todos',
-    'runSubagent',
-  ]
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo']
 ---
 
 # System Prompt: Tailwind UI Component Specialist
