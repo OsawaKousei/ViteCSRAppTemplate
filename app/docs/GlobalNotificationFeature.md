@@ -6,6 +6,7 @@
 **Widget-Oriented Architecture** に従い、機能ドメインとしてカプセル化されています。
 
 ### 特徴
+
 - **Centralized State:** Zustand を使用して通知の状態を一元管理しており、どこからでもアクセス可能です。
 - **Type Safety:** TypeScript による厳格な型定義がされており、誤った使い方がコンパイル時に検知されます。
 - **Widget-Oriented:** `GlobalNotificationWidget` を配置するだけで機能し、ロジックと見た目が完全に分離されています。
@@ -51,6 +52,7 @@ export const MyWidget = () => {
       message: '設定を保存しました。',
       type: 'success',
       // durationMs: 3000, // オプション: 表示時間(ms)
+      // position: 'top-right', // オプション: 表示位置
     });
   };
 
@@ -71,7 +73,8 @@ export const DeleteButton = () => {
   const handleDelete = () => {
     openModal({
       title: '削除の確認',
-      content: '本当にこのアイテムを削除してもよろしいですか？この操作は取り消せません。',
+      content:
+        '本当にこのアイテムを削除してもよろしいですか？この操作は取り消せません。',
       type: 'warning',
       confirmText: '削除する',
       cancelText: 'キャンセル',
@@ -92,6 +95,7 @@ export const DeleteButton = () => {
 ### 4.1 Hooks
 
 #### `useNotificationActions()`
+
 アクションを実行するための関数群を返します。
 
 - **`showToast(payload: ToastPayload): void`**
@@ -103,10 +107,19 @@ export const DeleteButton = () => {
 
 **`NotificationType`**
 通知のスタイルを指定します。
+
 - `'success'`: 成功 (緑)
 - `'error'`: エラー (赤)
 - `'info'`: 情報 (青) - デフォルト
 - `'warning'`: 警告 (黄)
+
+**`ToastPosition`**
+トーストの表示位置を指定します。指定がない場合はデフォルト位置（通常は右下）に表示されます。
+
+- `'top-left'`: 左上
+- `'top-right'`: 右上
+- `'bottom-left'`: 左下
+- `'bottom-right'`: 右下
 
 **`ToastPayload` (Omit<ToastMessage, 'id'>)**
 | Property | Type | Required | Description |
@@ -115,6 +128,7 @@ export const DeleteButton = () => {
 | `message` | `string` | ✅ | 本文メッセージ |
 | `title` | `string` | ❌ | タイトル（太字で表示） |
 | `durationMs` | `number` | ❌ | 表示時間(ms)。`0`で自動消去無効。デフォルトはStore実装または呼び出し側で指定。 |
+| `position` | `ToastPosition` | ❌ | 表示位置。`top-left`, `top-right`, `bottom-left`, `bottom-right` のいずれか。デフォルトは右下(または実装依存)。 |
 
 **`ModalPayload` (Omit<ModalConfig, 'id'>)**
 | Property | Type | Required | Description |
