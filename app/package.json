@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "format": "prettier --write .",
     "lint": "eslint .",
+    "typecheck": "tsc -b --noEmit",
     "preview": "vite preview",
     "test": "vitest",
-    "test:ct": "playwright test -c playwright-ct.config.ts",
-    "format": "prettier --write ."
+    "test:integration": "./scripts/run-integration.sh",
+    "test:ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
